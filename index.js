@@ -4,15 +4,15 @@ const db = require('./utils/db');
 const app = express();
 const PORT = 3000;
 
-// Connect to MongoDB
+// Connect to MongoDB Database
 db.connect();
 
 // Parse JSON request bodies
 app.use(express.json());
 
 // Routes
-// const productRoutes = require('./routes/products');
-// app.use('/products', productRoutes);
+const productRoutes = require('./routes/products');
+app.use('/', productRoutes);
 
 // Start the server
 app.listen(PORT, () => {
