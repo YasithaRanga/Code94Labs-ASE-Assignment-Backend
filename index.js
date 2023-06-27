@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Routes
 const productRoutes = require('./routes/products');
-app.use('/', productRoutes);
+app.use('/products', productRoutes);
 
 // Start the server
 app.listen(PORT, () => {

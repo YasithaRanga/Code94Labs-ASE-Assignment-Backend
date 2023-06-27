@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const { getClient } = require('../utils/db');
 
 const getProductCollection = () => getClient().db().collection('products');
@@ -10,7 +11,7 @@ module.exports = {
 
     getProductById: async (productId) => {
         const collection = getProductCollection();
-        return collection.findOne({ _id: productId });
+        return collection.findOne({ _id: new ObjectId(productId) });
     },
 
     createProduct: async (product) => {
@@ -34,13 +35,13 @@ module.exports = {
 
     updateProduct: async (productId, updatedProduct) => {
         const collection = getProductCollection();
-        const result = await collection.updateOne({ _id: productId }, { $set: updatedProduct });
+        const result = await collection.updateOne({ _id: new ObjectId(productId) }, { $set: updatedProduct });
         return result;
     },
 
     deleteProduct: async (productId) => {
         const collection = getProductCollection();
-        const result = await collection.deleteOne({ _id: productId });
+        const result = await collection.deleteOne({ _id: new ObjectId(productId) });
         return result;
     },
 };
