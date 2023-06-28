@@ -47,9 +47,9 @@ module.exports = {
         return result;
     },
 
-    deleteProduct: async (productId) => {
+    deleteProduct: async (productSKU) => {
         const collection = getProductCollection();
-        const result = await collection.deleteOne({ _id: new ObjectId(productId) });
+        const result = await collection.deleteOne({ sku: productSKU });
         return result;
     },
 };

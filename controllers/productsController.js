@@ -82,10 +82,10 @@ router.put('/:id', upload.array('images', 5), async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:sku', async (req, res) => {
     try {
-        const productId = req.params.id;
-        const result = await productModel.deleteProduct(productId);
+        const productSKU = req.params.sku;
+        const result = await productModel.deleteProduct(productSKU);
         res.json(result);
     } catch (error) {
         console.error('Error deleting product', error);
