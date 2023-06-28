@@ -1,8 +1,11 @@
 const express = require('express');
 const db = require('./utils/db');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors({ origin: 'http://127.0.0.1:5173' }))
 
 // Connect to MongoDB Database
 db.connect();
