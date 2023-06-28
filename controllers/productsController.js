@@ -44,6 +44,10 @@ router.post('/', upload.array('images', 5), async (req, res) => {
         const { sku, quantity, productName, description } = req.body;
         const images = req.files.map((file) => file.filename);
 
+        if (sku === '') {
+            res.status(400).json({ error: 'SKU should not be empty' });
+        }
+
         const newProduct = {
             sku,
             quantity,

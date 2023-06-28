@@ -24,6 +24,10 @@ module.exports = {
             return { error: 'SKU already exists' };
         }
 
+        if (sku === '') {
+            return { error: 'SKU should not be empty' };
+        }
+
         const newProduct = {
             sku,
             quantity,

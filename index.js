@@ -7,6 +7,8 @@ const PORT = 3000;
 
 app.use(cors({ origin: 'http://127.0.0.1:5173' }))
 
+app.use(express.static('uploads'))
+
 // Connect to MongoDB Database
 db.connect();
 
