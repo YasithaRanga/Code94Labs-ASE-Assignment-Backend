@@ -30,6 +30,7 @@ module.exports = {
             productName,
             images,
             description,
+            favourite: false,
         };
 
         const result = await collection.insertOne(newProduct);
