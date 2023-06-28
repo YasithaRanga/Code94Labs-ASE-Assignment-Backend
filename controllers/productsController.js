@@ -25,9 +25,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:sku', async (req, res) => {
     try {
-        const productId = req.params.id;
+        const productId = req.params.sku;
         const product = await productModel.getProductById(productId);
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
@@ -64,10 +64,10 @@ router.post('/', upload.array('images', 5), async (req, res) => {
     }
 });
 
-router.put('/:id', upload.array('images', 5), async (req, res) => {
+router.put('/:sku', upload.array('images', 5), async (req, res) => {
     try {
-        const productId = req.params.id;
-        const { sku, quantity, productName, description } = req.body;
+        const productId = req.params.sku;
+        const { sku, quantity, productName, description, favourite } = req.body;
         const images = req.files.map((file) => file.filename);
 
         const updatedProduct = {
@@ -76,6 +76,24 @@ router.put('/:id', upload.array('images', 5), async (req, res) => {
             productName,
             images,
             description,
+            favourite
+        };
+
+        const result = await productModel.updateProduct(productId, updatedProduct);
+        res.json(result);
+    } catch (error) {
+        console.error('Error updating product', error);
+        res.status(500).json({ error: 'An error occurred while updating the product' });
+    }
+});
+
+router.put('/favourite/:sku', async (req, res) => {
+    try {
+        const productId = req.params.sku;
+        const { favourite } = req.body;
+
+        const updatedProduct = {
+            favourite
         };
 
         const result = await productModel.updateProduct(productId, updatedProduct);

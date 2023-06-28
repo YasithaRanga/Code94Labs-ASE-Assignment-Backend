@@ -9,9 +9,9 @@ module.exports = {
         return collection.find().toArray();
     },
 
-    getProductById: async (productId) => {
+    getProductById: async (productSKU) => {
         const collection = getProductCollection();
-        return collection.findOne({ _id: new ObjectId(productId) });
+        return collection.findOne({ sku: productSKU });
     },
 
     createProduct: async (product) => {
@@ -47,7 +47,7 @@ module.exports = {
 
     updateProduct: async (productId, updatedProduct) => {
         const collection = getProductCollection();
-        const result = await collection.updateOne({ _id: new ObjectId(productId) }, { $set: updatedProduct });
+        const result = await collection.updateOne({ sku: productId }, { $set: updatedProduct });
         return result;
     },
 
