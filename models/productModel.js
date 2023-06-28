@@ -17,6 +17,13 @@ module.exports = {
     createProduct: async (product) => {
         const collection = getProductCollection();
         const { sku, quantity, productName, images, description } = product;
+
+        // Check if SKU already exists
+        const existingProduct = await collection.findOne({ sku: sku });
+        if (existingProduct) {
+            return { error: 'SKU already exists' };
+        }
+
         const newProduct = {
             sku,
             quantity,
@@ -27,9 +34,9 @@ module.exports = {
 
         const result = await collection.insertOne(newProduct);
         if (result.acknowledged) {
-            return "Product added successfully";
+            return { success: "Product added successfully" };
         } else {
-            return "Product addition failed";
+            return { error: "Product addition failed" };
         }
     },
 
