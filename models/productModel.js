@@ -16,7 +16,7 @@ module.exports = {
 
     createProduct: async (product) => {
         const collection = getProductCollection();
-        const { sku, quantity, productName, images, description } = product;
+        const { sku, quantity, productName, images, description, defaultImage } = product;
 
         // Check if SKU already exists
         const existingProduct = await collection.findOne({ sku: sku });
@@ -35,6 +35,7 @@ module.exports = {
             images,
             description,
             favourite: false,
+            defaultImage: ""
         };
 
         const result = await collection.insertOne(newProduct);

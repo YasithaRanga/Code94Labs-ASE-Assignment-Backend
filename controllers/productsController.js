@@ -52,6 +52,7 @@ router.post('/', upload.array('images', 5), async (req, res) => {
             sku,
             quantity,
             productName,
+            defaultImage: images[0],
             images,
             description,
         };
@@ -67,17 +68,26 @@ router.post('/', upload.array('images', 5), async (req, res) => {
 router.put('/:sku', upload.array('images', 5), async (req, res) => {
     try {
         const productId = req.params.sku;
-        const { sku, quantity, productName, description, favourite } = req.body;
-        const images = req.files.map((file) => file.filename);
+        const { sku, quantity, productName, description, defaultImage } = req.body;
+        var updatedProduct = {};
 
-        const updatedProduct = {
-            sku,
-            quantity,
-            productName,
-            images,
-            description,
-            favourite
-        };
+        if (req.files.length !== 0) {
+            const images = req.files.map((file) => file.filename);
+            updatedProduct = {
+                quantity,
+                productName,
+                images,
+                defaultImage: images[0],
+                description
+            };
+        } else {
+            updatedProduct = {
+                quantity,
+                defaultImage,
+                productName,
+                description,
+            };
+        }
 
         const result = await productModel.updateProduct(productId, updatedProduct);
         res.json(result);
