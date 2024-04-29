@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: Product List - Nodejs REST API Service
+  description: >-
+    This is a sample API specification for a simple reading list application with in-memory cache
+    written in Nodejs
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Choreo
+  url: https://choreo.dev
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: products
+    description: In-memory product list cache API
+paths:
+  /products:
+    summary: List all products
+    get:
+      summary: List all products
+      operationId: ListAllproducts
+      tags:
+        - products
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StringArray'
+    post:
+      summary: Insert a new product
+      operationId: SetNewproduct
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid request body
+      tags:
+        - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyValue'
+
+  /products/{sku}:
+    summary: Get Product by SKU
+    get:
+      tags:
+        - products
+      summary: Get product by UUID
+      operationId: GetproductByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: UUID of product to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyValue'
+        '404':
+          description: UUID not found
+    delete:
+      tags:
+        - products
+      summary: Delete product by UUID
+      description: Deletes a single product based on the UUID supplied
+      operationId: DeleteproductByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: UUID of product to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: ISBN not found
+    put:
+      tags:
+        - products
+      summary: Update product status by UUID
+      description: Updates the status of the product based on the UUID supplied
+      operationId: UpdateproductStatusByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: UUID of product to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: UUID not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Status'
+
+components:
+  schemas:
+    Key:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: 'my-uuid'
+    Status:
+      type: object
+      properties:
+        status:
+          type: string
+          example: 'read'
+    KeyValue:
+      type: object
+      required:
+        - title
+        - author
+        - status
+      properties:
+        title:
+          type: string
+          example: 'my-title'
+        author:
+          type: string
+          example: 'my-author'
+        status:
+          type: string
+          example: 'read'
+    StringArray:
+      type: array
+      items:
+        type: string
