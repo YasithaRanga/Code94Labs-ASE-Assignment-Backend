@@ -5,9 +5,9 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-app.use(cors({ origin: 'http://127.0.0.1:5173' }))
+app.use(cors({ origin: process.env['FRONTEND_APP_URL'] }));
 
-app.use(express.static('uploads'))
+app.use(express.static('uploads'));
 
 // Connect to MongoDB Database
 db.connect();
@@ -21,5 +21,5 @@ app.use('/products', productRoutes);
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
