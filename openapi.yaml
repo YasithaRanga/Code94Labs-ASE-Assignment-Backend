@@ -52,10 +52,10 @@ paths:
     get:
       tags:
         - products
-      summary: Get product by UUID
-      operationId: GetproductByUUID
+      summary: Get product by SKU
+      operationId: GetproductBySKU
       parameters:
-        - name: uuid
+        - name: sku
           in: path
           description: UUID of product to return
           required: true
@@ -75,9 +75,9 @@ paths:
         - products
       summary: Delete product by UUID
       description: Deletes a single product based on the UUID supplied
-      operationId: DeleteproductByUUID
+      operationId: DeleteproductBySKU
       parameters:
-        - name: uuid
+        - name: sku
           in: path
           description: UUID of product to delete
           required: true
@@ -93,9 +93,9 @@ paths:
         - products
       summary: Update product status by UUID
       description: Updates the status of the product based on the UUID supplied
-      operationId: UpdateproductStatusByUUID
+      operationId: UpdateproductStatusBySKU
       parameters:
-        - name: uuid
+        - name: sku
           in: path
           description: UUID of product to update
           required: true
@@ -117,32 +117,30 @@ components:
     Key:
       type: object
       properties:
-        uuid:
+        sku:
           type: string
-          example: 'my-uuid'
-    Status:
-      type: object
-      properties:
-        status:
-          type: string
-          example: 'read'
+          example: '123456'
     KeyValue:
       type: object
       required:
-        - title
-        - author
-        - status
+        - sku
+        - quantity
+        - description
+        - productName
       properties:
-        title:
+        sku:
           type: string
-          example: 'my-title'
-        author:
+          example: '123456'
+        quantity:
           type: string
-          example: 'my-author'
-        status:
+          example: '2'
+        description:
           type: string
-          example: 'read'
+          example: 'this is a description'
+        productName:
+          type: string
+          example: 'Product Name'
     StringArray:
       type: array
       items:
-        type: string
+        type: object
